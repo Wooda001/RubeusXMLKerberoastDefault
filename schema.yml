@@ -1,0 +1,30 @@
+schema: Custom.AdminDashAccess.V1
+version: 0
+parser:
+  fastmatch:
+    match:
+      - '%{ip_address} %{resource} [%{criticality}] [%{timestamp}] %{login} - %{action}'
+    emptyValues: [ '-' ] # specify that `-` string values are considered null
+fields:
+  - name: ip_address
+    description: 'The remote IP Address that triggered the event'
+    type: string
+    indicators:
+      - ip
+  - name: resource
+    description: 'The resource being accessed'
+    type: string
+  - name: criticality
+    description: 'The system generated label for criticality'
+    type: string
+  - name: timestamp
+    description: 'The date/time value in ISO 8601 format'
+    type: timestamp
+    isEventTime: true
+    timeFormat: rfc3339
+  - name: login
+    description: 'The login value used'
+    type: string
+  - name: action
+    description: 'The action that triggered logging' 
+    type: string
